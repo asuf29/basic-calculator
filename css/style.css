@@ -98,15 +98,23 @@ button{
     font-size: 22px;
 }
 
+#resultOperators .resultOperator-equal{
+    width: 218px;
+    font-size: 22px;
+    color: #fff;
+    background-color: orange;
+    margin: 4px;
+}
+
 #equal{
-    width: 65px;
-    height: 65px;
+    width: 62px;
+    height: 62px;
     border-radius: 30px;
     margin-right: 4px;
 }
 
 #delete{
-    width: 65px;
-    height: 65px;
+    width: 62px;
+    height: 62px;
     border-radius: 30px;
 }
