@@ -1,83 +1,87 @@
-var leftPart = '';
-var rightPart = '';
-var selectedOperator = '';
+let currentVal=0;
+let result=0;
+let isClickSymbol=false;
+let isClickNumber=false;
+let selectSymbol=0;
 
+function ClickNumber(val){
 
-    var numbers = document.querySelectorAll(".num");
-        for (var i = 0; i < numbers.length; i++) {
-          numbers[i].addEventListener("click", function() {
-            if (this.value == '.') {
-              return;
-            }
-            document.getElementById("resultInner").innerHTML += this.value;
+    if(isClickSymbol && !isClickNumber){
+        $('#inputVal').text(0);
+    }
 
-            if (selectedOperator == '') {
-              leftPart += this.value;
-            } else if (selectedOperator != '') {
-              rightPart += this.value;
-            }
+    let inputVal=$('#inputVal').text();
 
-          }, false);
-        }
+    if(inputVal==0){
+        $('#inputVal').text(val);
+    }else{
+        $('#inputVal').text(inputVal+''+val);
+    }
 
+    isClickNumber=true;
+}
 
-        var operators = document.querySelectorAll(".operator");
-        for (var i = 0; i < operators.length; i++) {
-          operators[i].addEventListener("click", function() {
-            if (document.getElementById("resultInner").innerHTML === "") {
-              return;
-            }
-            document.getElementById("resultInner").innerHTML += this.value;
+function ClickSymbol(val){
+  let inputVal=$('#inputVal').text();
+  switch (val){
+    case 1:
+      selectSymbol = 1;
+      if(!isClickSymbol){
+        currentVal=inputVal;
+      }else if(isClickSymbol && isClickNumber){
+        result=parseFloat(currentVal)/parseFloat(inputVal);
+        currentVal=result;
+        $('#inputVal').text(result);
+    }
+    isClickSymbol=true;
+    isClickNumber=false;
+    break;
+    case 2:
+      selectSymbol=2;
+      if(!isClickSymbol){
+        currentVal=inputVal;
+      }else if(isClickSymbol && isClickNumber){
+        result=parseFloat(currentVal)*parseFloat(inputVal);
+        currentVal=result;
+        $('#inputVal').text(result);
+      }
+      isClickSymbol=true;
+      isClickNumber=false;
+      break;
+      case 3:
+        selectSymbol = 3;
+        if(!isClickSymbol){
+          currentVal=inputVal;
+      }else if(isClickSymbol && isClickNumber){
+          result=parseFloat(currentVal)-parseFloat(inputVal);
+          currentVal=result;
+          $('#inputVal').text(result);
+      }
+      isClickSymbol=true;
+      isClickNumber=false;
+      break;
+      case 4:
+        selectSymbol = 4;
+        if(!isClickSymbol){
+          currentVal=inputVal;
+      }else if(isClickSymbol && isClickNumber){
+          result=parseFloat(currentVal)+parseFloat(inputVal);
+          currentVal=result;
+          $('#inputVal').text(result);
+      }
+      isClickSymbol=true;
+      isClickNumber=false;
+      break;
+      case 5:
+        ClickSymbol(selectSymbol);
+      break;
+      case 6:
+        if(!inputVal.includes('.')){
+          inputVal=inputVal+'.';
+          $('#inputVal').text(inputVal);
+      }
+      break;
+        
 
-            selectedOperator = this.value;
-          }, false);
-        }
-
-
-
-        document.getElementById("nokta").addEventListener("click", function() {
-          if (document.getElementById("resultInner").innerHTML.indexOf('.') != -1) {
-            return;
-          }
-
-          if (document.getElementById("resultInner").innerHTML === "") {
-            output = document.getElementById("resultInner").innerHTML = '0.';
-          } else if (document.getElementById("resultInner").innerHTML === output) {
-            document.getElementById("resultInner").innerHTML = document.getElementById("result").innerHTML + '.';
-          }
-        }, false);
-
-
-        document.getElementById("equal").addEventListener("click", function() {
-
-          var calculationResult = 0;
-
-					
-          
-          if (selectedOperator == '+') {
-            calculationResult = parseFloat(leftPart) + parseFloat(rightPart);
-          } else if (selectedOperator == '-') {
-            calculationResult = parseFloat(leftPart) - parseFloat(rightPart);
-          } else if (selectedOperator == '*') {
-            calculationResult = parseFloat(leftPart) * parseFloat(rightPart);
-          } else if (selectedOperator == '/') {
-            calculationResult = parseFloat(leftPart) / parseFloat(rightPart);
-          }
-
-
-          document.getElementById("resultInner").innerHTML = calculationResult;
-
-          leftPart = '';
-          rightPart = '';
-          selectedOperator = '';
-        }, false);
-
-
-        document.getElementById("delete").addEventListener("click", function() {
-          document.getElementById("resultInner").innerHTML = '';
-
-          leftPart = '';
-          rightPart = '';
-          selectedOperator = '';
-        }, false);
-      
+  }
+}
